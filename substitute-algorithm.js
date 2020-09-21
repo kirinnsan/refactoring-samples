@@ -78,7 +78,7 @@ console.log(Math.min(...food3.map(ele => ele.price)));
 console.log('(No3):end');
 
 
-// No4
+// (4)
 
 const food4 = [
   { name: 'orange', price: 100, color: 'red' },
@@ -101,4 +101,48 @@ names = food4.filter(ele => ele.color === 'yellow')
   .map(ele => ele.name);
 console.log(names);
 console.log('(No4):end');
+
+// (5)
+const input = 'name,age,from\n' +
+  'Tanaka,20,Tokyo\n' +
+  'Yamada,30,Osaka\n' +
+  'Yamamoto,40,Hukuoka\n' +
+  'Morita,50,Kumamoto\n';
+
+// before
+function convertData(data) {
+  const lines = input.split('\n');
+  let isFirstLine = true;
+  const result = [];
+  for (const line of lines) {
+    if (isFirstLine) {
+      isFirstLine = false;
+      continue;
+    }
+    if (line.trim() === '') continue;
+    const record = line.split(',');
+    if (record[2] === 'Osaka') {
+      result.push({ name: record[0].trim(), age: record[1].trim() })
+    }
+  }
+  return result;
+}
+
+// after
+function updateConvertData(data) {
+  const lines = input.split('\n');
+  const result = lines
+    .slice(1)
+    .filter(line => line.trim() !== '')
+    .map(line => line.split(','))
+    .filter(rows => rows[2] === 'Osaka')
+    .map(rows => ({ name: rows[0].trim(), age: rows[1].trim() }));
+  return result;
+}
+
+console.log('(No5):start');
+const result1 = convertData(input);
+const result2 = updateConvertData(input);
+console.log('(No5):end');
+
 
